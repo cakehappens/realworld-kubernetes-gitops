@@ -2,4 +2,4 @@
 
 set -Eeuo pipefail
 
-"$*"
+"$@"
