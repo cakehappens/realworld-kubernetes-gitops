@@ -15,13 +15,15 @@ jobs:
           tags: ${{ github.sha }}
           username: ${{ secrets.DOCKER_USERNAME }}
   deploy:
-    env:
-      KUBECTL_VERSION: "1.14"
-      KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG_DATA }}
     name: deploy
-    uses: steebchen/kubectl@master
-    with:
-      args: apply -f
+    runs-on: ubuntu-latest
+    steps:
+      - env:
+          KUBECTL_VERSION: "1.14"
+          KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG_DATA }}
+        uses: steebchen/kubectl@master
+        with:
+          args: version
   hadolint:
     runs-on: ubuntu-latest
     steps:
@@ -29,9 +31,12 @@ jobs:
       - uses: brpaz/hadolint-action@master
   render_manifests:
     name: render manifests
-    uses: ./.github/actions/jsonnet
-    with:
-      run: jsonnet --help
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: ./.github/actions/jsonnet
+        with:
+          args: jsonnet --help
 name: main
 on:
   push:

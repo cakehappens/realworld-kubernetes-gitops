@@ -75,22 +75,33 @@ local lm = import "github.com/cakehappens/lonely-mountain/main.libsonnet";
       render_manifests: {
         name_:: "render_manifests",
         name: "render manifests",
-        uses: "./.github/actions/jsonnet",
-        with: {
-          run: "jsonnet --help"
-        },
+        "runs-on": "ubuntu-latest",
+        steps: [
+          $.checkout_,
+          {
+            uses: "./.github/actions/jsonnet",
+            with: {
+              args: "jsonnet --help"
+            },
+          },
+        ],
       },
       deploy: {
         name_:: "deploy",
         name: "deploy",
-        uses: "steebchen/kubectl@master",
-        env: {
-          KUBECTL_VERSION: "1.14",
-          KUBE_CONFIG_DATA: "${{ secrets.KUBE_CONFIG_DATA }}",
-        },
-        with: {
-          args: "apply -f"
-        },
+        "runs-on": "ubuntu-latest",
+        steps: [
+          {
+            uses: "steebchen/kubectl@master",
+            env: {
+              KUBECTL_VERSION: "1.14",
+              KUBE_CONFIG_DATA: "${{ secrets.KUBE_CONFIG_DATA }}",
+            },
+            with: {
+              args: "version"
+            },
+          },
+        ],
       },
     },
   },
