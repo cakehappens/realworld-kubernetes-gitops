@@ -16,6 +16,14 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
   deploy:
     name: deploy
+    needs:
+      - name: render manifests
+        runs-on: ubuntu-latest
+        steps:
+          - uses: actions/checkout@v2
+          - uses: ./.github/actions/jsonnet
+            with:
+              args: jsonnet --help
     runs-on: ubuntu-latest
     steps:
       - env:

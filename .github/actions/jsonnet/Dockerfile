@@ -34,4 +34,6 @@ RUN YQ_URL="https://github.com/mikefarah/yq/releases/download/3.3.0/yq_linux_amd
 
 COPY --from=golang-binaries /go/bin /usr/bin
 
-ENTRYPOINT [ "/bin/bash", "-c" ]
+COPY entrypoint.sh /entrypoint.sh
+
+ENTRYPOINT ["/entrypoint.sh"]

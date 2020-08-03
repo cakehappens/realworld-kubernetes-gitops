@@ -90,6 +90,7 @@ local lm = import "github.com/cakehappens/lonely-mountain/main.libsonnet";
         name_:: "deploy",
         name: "deploy",
         "runs-on": "ubuntu-latest",
+        needs: [ workflow.jobs.render_manifests ],
         steps: [
           {
             uses: "steebchen/kubectl@master",
