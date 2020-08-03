@@ -1,1 +1,1 @@
-# realworld-kubernetes-gitops
+# RealWorld Kubernets GitOps

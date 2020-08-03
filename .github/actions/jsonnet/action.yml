@@ -1,0 +1,11 @@
+name: 'Jsonnet Render'
+description: 'Render some Jsonnet'
+inputs:
+  run:
+    description: 'what to run'
+    required: true
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
+  args:
+    - ${{ inputs.run }}
